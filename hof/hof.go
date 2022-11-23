@@ -18,18 +18,12 @@ func Filter(slice []int, fn func(int) bool) []int {
 	return out
 }
 
-func Reduce(slice []int, fn func(a, b int) int) int {
-	temp := make([]int, len(slice))
-	copy(temp, slice)
-
-	for l := 1; l < len(temp); l = l << 1 {
-		stride := l << 1
-		for i := 0; i < len(temp)-l; i += stride {
-			temp[i] = fn(temp[i], temp[i+l])
-		}
+func Reduce(slice []int, fn func(accumulator, x int) int) int {
+	acc := slice[0]
+	for i := 1; i < len(slice); i++ {
+		acc = fn(acc, slice[i])
 	}
-
-	return temp[0]
+	return acc
 }
 
 func Every(slice []int, fn func(int) bool) bool {
@@ -39,4 +33,33 @@ func Every(slice []int, fn func(int) bool) bool {
 		}
 	}
 	return true
+}
+
+func Some(slice []int, fn func(int) bool) bool {
+	for _, s := range slice {
+		if fn(s) {
+			return true
+		}
+	}
+	return false
+}
+
+func Find(slice []int, fn func(int) bool) (int, bool) {
+	for _, s := range slice {
+		if fn(s) {
+			return s, true
+		}
+	}
+	var notFound int
+	return notFound, false
+}
+
+func FindIndex(slice []int, fn func(int) bool) (int, bool) {
+	for i, s := range slice {
+		if fn(s) {
+			return i, true
+		}
+	}
+	var notFound int
+	return notFound, false
 }

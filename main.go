@@ -39,8 +39,32 @@ func main() {
 	})
 	fmt.Println(isEven)
 
-	sum := hof.Reduce(s1, func(a, b int) int {
-		return a + b
+	someDivisibleBy4 := hof.Some(s1, func(x int) bool {
+		if x%4 == 0 {
+			return true
+		}
+		return false
+	})
+	fmt.Println(someDivisibleBy4)
+
+	sum := hof.Reduce(s1, func(accumulator, x int) int {
+		return accumulator + x
 	})
 	fmt.Println(sum)
+
+	firstDivBy3, _ := hof.Find(s1, func(x int) bool {
+		if x%3 == 0 {
+			return true
+		}
+		return false
+	})
+	fmt.Println(firstDivBy3)
+
+	firstDivBy3Idx, _ := hof.FindIndex(s1, func(x int) bool {
+		if x%3 == 0 {
+			return true
+		}
+		return false
+	})
+	fmt.Println(firstDivBy3Idx)
 }
