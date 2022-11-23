@@ -29,10 +29,6 @@ func Reduce(slice []int, fn func(a, b int) int) int {
 		}
 	}
 
-	if len(temp)%2 != 0 {
-		temp[0] += temp[len(temp)-1]
-	}
-
 	return temp[0]
 }
 
